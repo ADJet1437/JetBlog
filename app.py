@@ -3,6 +3,8 @@ from flask import Flask, render_template, redirect, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flaskext.markdown import Markdown
+
 
 # app 
 app = Flask(__name__)
@@ -13,6 +15,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'my_secret'
 # app db
 db = SQLAlchemy(app)
+Markdown(app)
 
 # app admin
 admin = Admin(app)
