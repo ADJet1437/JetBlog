@@ -1,0 +1,13 @@
+# Ingore .pyc
+*.pyc
+
+# Ingore cache files
+*__pycache__/*
+
+# Ignore custom IDE folders
+*.sublime-workspace
+*.idea*
+*.vscode
+
+# Ingore env files
+*my-flask-blog-venv* 
