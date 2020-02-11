@@ -64,7 +64,6 @@ def add_post():
   subtitle = request.form.get('subtitle')
   author = request.form.get('author')
   content = request.form.get('content')
-  print(content)
 
   post = BlogPost(title=title, subtitle=subtitle, author=author, content=content, post_date=datetime.now())
   # add data to database
