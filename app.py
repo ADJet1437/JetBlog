@@ -61,7 +61,6 @@ def add_post():
   subtitle = request.form.get('subtitle')
   author = request.form.get('author')
   content = request.form.get('content')
-  print(content)
 
   post = BlogPost(title=title, subtitle=subtitle, author=author, content=content, post_date=datetime.now())
   # add data to database
@@ -71,5 +70,11 @@ def add_post():
   return redirect(url_for('index'))
 
 
+@app.route("/login")
+def login():
+  return render_template("login.html")
+
+
 if __name__ == "__main__":
-   app.run(host='0.0.0.0', debug=True)
+   db.create_all()
+   app.run(host='0.0.0.0', port='5001', debug=True)
