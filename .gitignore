@@ -1,0 +1,5 @@
+*.pyc
+
+my-flask-blog-venv/*
+
+__pycache__/*
