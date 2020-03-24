@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
+from common.libs.release_time import get_release_time
+
 # app 
 app = Flask(__name__)
 
@@ -28,9 +30,39 @@ class BlogPost(db.Model):
     author = db.Column(db.String(30))
     post_date = db.Column(db.DateTime)
 
+class User(db.Model):
+    """Class for a sqlite3 table model
+    """
+    id = db.Column(db.Integer, primary_key=True)
+    user_name = db.Column(db.String(50))
+    password = db.Column(db.String(50))
+
 
 admin.add_view(ModelView(BlogPost, db.session))
 
+
+class UrlManager(object):
+
+    @staticmethod
+    def buildUrl(path):
+        # TODO: move to conf file
+        domain_name = "http://0.0.0.0:5001"
+        return "%s%s" % (domain_name, path)
+
+    @staticmethod
+    def buildStaticUrl(path):
+        """
+
+        :param path:
+        :return:
+        """
+        release = get_release_time() 
+        path = "/static" + path + '?v=' + release
+        return UrlManager.buildUrl( path )
+
+# Global template funtions
+app.add_template_global(UrlManager.buildUrl, "buildUrl")
+app.add_template_global(UrlManager.buildStaticUrl, "buildStaticUrl")
 
 @app.route('/')
 def index():
