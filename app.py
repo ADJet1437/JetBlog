@@ -1,5 +1,7 @@
 from datetime import datetime
-from flask import Flask, render_template, redirect, request, redirect, url_for
+from functools import wraps
+
+from flask import Flask, render_template, redirect, request, redirect, url_for, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
@@ -39,6 +41,7 @@ class User(db.Model):
 
 
 admin.add_view(ModelView(BlogPost, db.session))
+admin.add_view(ModelView(User, db.session))
 
 
 class UrlManager(object):
@@ -82,8 +85,33 @@ def about():
   return render_template('about.html')
 
 
-@app.route('/add')
+def require_auth(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        # Does the user have an api_token?
+        api_token = session.get('api_token')
+        user_name = request.form.values
+        import pdb; pdb.set_trace()
+        if api_token is None:
+            # log.info("No api token, redirect to login")
+            return redirect(url_for('login'))
+
+        # Does his api_key is in the db?
+        user_api_key = db.get('user:{}:api_key'.format(api_token['user_id']))
+        if user_api_key != api_token['api_key']:
+            # log.info("API key dont match, refresh them")
+            return redirect(url_for('login'))
+        return f
+    return wrapper
+
+
+# @app.before_request
+@app.route('/add', methods=["GET", "POST"])
 def add():
+  data = request.form.values
+  # import pdb; pdb.set_trace()
+  if "okkkk" not in str(data):
+    return render_template("login.html")
   return render_template('add.html')
 
 
@@ -105,6 +133,17 @@ def add_post():
 @app.route("/login")
 def login():
   return render_template("login.html")
+
+
+@app.route("/login-validate", methods=['POST'])
+def login_validate():
+  data = request.form.values
+  # import pdb; pdb.set_trace()
+  if data:
+    pass
+
+  return redirect(url_for("add"))
+
 
 
 if __name__ == "__main__":

@@ -14,3 +14,19 @@
 #
 # if __name__ == "__main__":
 #     db.create_all()
+
+def my_log(func):
+
+    def wraper():
+        print("Run this first")
+        func()
+
+    return wraper
+
+
+@my_log
+def run():
+    print("go..........")
+    pass
+
+run()

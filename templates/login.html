@@ -26,7 +26,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>Welcome Jet</h1>
+            <h1>Welcome</h1>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
         <div class="col-lg-8">
             <div class="panel panel-default" >
                 <div class="panel-body">
-                    <div class="form-horizontal login-form">
+                    <form class="form-horizontal login-form" method="POST" action="{{ url_for('login_validate') }}" >
                         <div class="form-group">
                             <label for="inputEmail" class="col-sm-2 control-label">Email</label>
                             <div class="col-sm-10">
@@ -54,10 +54,10 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary login-button">Log in</button>
+                                <button type="submit" class="btn btn-primary login-button" onclick="handleClick()">Log in</button>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -78,12 +78,36 @@
 
   <!-- Bootstrap core JavaScript -->
   <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+  <!-- <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script> -->
 
   <!-- Custom scripts for this template -->
   <script src="{{ url_for('static', filename='clean-blog.min.js') }}"></script>
 
-  <script src="{{ buildStaticUrl('/js/login.js') }} "></script>
+  <!-- <script src="{{ buildStaticUrl('/js/login.js') }} "></script> -->
+  <script type="text/javascript">
+      function handleClick() {
+        var inputEmail = document.getElementById("inputEmail").value;
+        var inputPwd = document.getElementById("inputPassword").value;
+
+        if ( inputEmail.length < 3 || inputPwd.length < 6 ) {
+          alert("Email or password not correct");
+        }
+
+        // $.ajax({
+        //   url: "http://0.0.0.0:5001/login-validate",
+        //   method: "POST",
+        //   data: {
+        //     inputEmail: inputEmail,
+        //     inputPwd: inputPwd
+        //   },
+        //   success:function(){
+        //     window.open("http://0.0.0.0:5001/add", "_self")
+        //   }
+        // });
+
+      }
+
+  </script>
 
 </body>
 
