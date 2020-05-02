@@ -10,7 +10,7 @@ def create_all():
 
 
 def main():
-    app.run()
+    app.run(debug=True)
 
 if __name__ == "__main__":
     try:
