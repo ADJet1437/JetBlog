@@ -3,4 +3,5 @@ Flask-SQLAlchemy
 flask-admin
 flask-login
 flask-paginate
+flask-script
 uwsgi
