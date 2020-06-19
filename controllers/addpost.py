@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 
 from app import db
 from common.db_models.blog_post import BlogPost
+from controllers.form import EditormdForm
 
 add_post_endpoint = Blueprint("add_post_endpoint", __name__)
 
@@ -11,7 +12,12 @@ def add_post():
   title = request.form.get('title')
   subtitle = request.form.get('subtitle')
   author = request.form.get('author')
-  content = request.form.get('content')
+
+  content = None
+
+  form = EditormdForm()
+  if form.validate_on_submit():
+    content = form.body.data
 
   post = BlogPost(title=title, subtitle=subtitle, author=author, content=content, post_date=datetime.now())
   # add data to database

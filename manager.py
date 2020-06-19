@@ -1,7 +1,15 @@
 # -*- coding: utf-8 -*-
+from flask_bootstrap import Bootstrap
+from flaskext.markdown import Markdown
+from flask_editormd import Editormd
+
 from app import db
 from route import app
 from flask_script import Server, Command, Manager
+
+Bootstrap(app)
+Markdown(app)
+Editormd(app)
 
 manager = Manager(app)
 manager.add_command("runserver", Server(host="0.0.0.0", use_debugger=True, use_reloader=True))
