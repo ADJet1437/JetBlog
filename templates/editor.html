@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8" />
+        <title>Jet's development notes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <style>
+            .form-extra-value {
+                width:80%;
+                margin: 10px auto;
+            }
+        </style>
+
+        <!-- editor css -->
+        <link rel="stylesheet" href="../static/css/editor-style.css" />
+        <link rel="stylesheet" href="../static/css/editormd.css" />
+
+          <!-- Bootstrap core CSS -->
+        <link href="{{ url_for('static', filename='bootstrap.min.css')}}" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="{{ url_for('static', filename='clean-blog.min.css')}}" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('{{ url_for('static', filename='img/about-2.jpg') }}')">
+        <div class="overlay"></div>
+        <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="page-heading">
+                <h1>Add my blog</h1>
+                <span class="subheading">Have questions? I have answers.</span>
+            </div>
+            </div>
+        </div>
+        </div>
+    </header>
+
+    <div id="layout" >
+        <form id="editor-form" method="POST" action="{{ url_for('add_post_endpoint.add_post') }}">
+            <div class="form-extra-value">
+                <label>Title</label>
+                <input type="text" class="form-control" placeholder="Title" name="title" id="title" required data-validation-required-message="Please enter your tile." >
+                <p class="help-block text-danger"></p>
+            </div>
+            <div class="form-extra-value">
+                <label>Subtitle</label>
+                <input type="text" class="form-control" placeholder="Subtitle" name="subtitle" id="subtitle" required data-validation-required-message="Please enter your subtitle.">
+                <p class="help-block text-danger"></p>
+            </div>
+            <div class="form-extra-value">
+                <label>Author</label>
+                <input type="text" class="form-control" placeholder="Author" name="author" id="author" required data-validation-required-message="Please enter author.">
+                <p class="help-block text-danger"></p>
+            </div>
+            <div id="blog-editor">
+                <textarea style="display:none;"></textarea>
+            </div>
+            <div style="width:20%;margin: 10px auto;">
+                <input type="submit" name="submit" value="Submit" style="padding: 5px;" /> 
+            </div> 
+        </form>
+    </div>
+        
+    <script src="../static/jquery.min.js"></script>
+    <script src="../static/js/editormd.js"></script>   
+    <script type="text/javascript">
+        $(function() {       
+            var testEditor = editormd("blog-editor", {
+                width           : "90%",
+                autoHeight      : true,
+                path            : "../static/editormd/lib/",
+                flowChart       : true,
+                tex             : true,
+                emoji           : true,
+                taskList        : true,
+                flowChart       : true, 
+                sequenceDiagram : true
+            });
+        });
+    </script>
+        
+    </body>
+</html>
