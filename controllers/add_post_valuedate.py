@@ -3,8 +3,6 @@ from flask import Blueprint, render_template, request, make_response
 from app import app
 from common.db_models.user import User
 
-from controllers.form import EditormdForm
-
 validate_endpoint = Blueprint("validate_endpoint", __name__)
 
 @validate_endpoint.route("/add-post-validate", methods=['POST', "GET"])
@@ -20,8 +18,8 @@ def login_validate():
         digest = gen_digest(pwd=pwd)
         if str(digest) != str(cookie).split("#")[0]:
             return login_failed()
-        form = EditormdForm()
-        return render_template("markdown_editor.html", form=form)
+
+        return render_template("editor.html")
 
     forms = request.form
     data = forms.to_dict()
@@ -39,8 +37,7 @@ def login_validate():
         return login_failed()
 
     digest = gen_digest(pwd=pwd)
-    form = EditormdForm()
-    response = make_response(render_template('markdown_editor.html', form=form))
+    response = make_response(render_template('editor.html'))
     response.set_cookie(app.config["AUTH_COOKIE_NAME"], "%s#%s" % (digest, user_info.id), 60*20)
 
     return response
