@@ -12,12 +12,7 @@ def add_post():
   title = request.form.get('title')
   subtitle = request.form.get('subtitle')
   author = request.form.get('author')
-
-  content = None
-
-  form = EditormdForm()
-  if form.validate_on_submit():
-    content = form.body.data
+  content = request.form.get('blog-editor-markdown-doc')
 
   post = BlogPost(title=title, subtitle=subtitle, author=author, content=content, post_date=datetime.now())
   # add data to database
